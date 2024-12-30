@@ -1,30 +1,21 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics
 from .models import Cursos, Avaliacao
 from .serializers import AvaliacaoSerializer, CursosSerializer
 
 
-class CursosAPIView(APIView):
-    def get(self, request):
-        cursos = Cursos.objects.all()
-        serializer = CursosSerializer(cursos, many=True)
-        return Response(serializer.data)
-    
-    def post(self, request):
-        serializer = CursosSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+class CursosAPIView(generics.ListCreateAPIView):
+    queryset = Cursos.objects.all()
+    serializer_class = CursosSerializer
 
-class AvaliacaoAPIView(APIView):
-    def get(self, request):
-        avaliacao = Avaliacao.objects.all()
-        serializer = AvaliacaoSerializer(avaliacao, many=True)
-        return Response(serializer.data)
+class CursoAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Cursos.objects.all()
+    serializer_class = CursosSerializer
 
-    def post(self, request):
-        serializer = AvaliacaoSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)        
+class AvaliacoesAPIView(generics.ListCreateAPIView):
+    queryset = Avaliacao.objects.all()
+    serializer_class = AvaliacaoSerializer
+
+class AvaliacaoAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Avaliacao.objects.all()
+    serializer_class = AvaliacaoSerializer
+      
