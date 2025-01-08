@@ -40,5 +40,5 @@ class TestCursos(TestCase):
         self.assertEqual(resposta.json()['titulo'], atualizado["titulo"])
 
     def test_delete_curso(self):
-        resposta = requests.delete(url=f'{self.url_base_cursos}2/', headers=self.headers)
+        resposta = requests.delete(url=f'{self.url_base_cursos}1/', headers=self.headers)
         self.assertEqual(resposta.status_code, 204)
